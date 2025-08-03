@@ -1,6 +1,6 @@
 'use client';
 
-import { useScroll, useMotionValueEvent, LayoutGroup, useTransform, useMotionValue } from 'motion/react';
+import { useScroll, useMotionValueEvent, LayoutGroup, useTransform, useMotionValue, spring } from 'motion/react';
 import * as motion from 'motion/react-client';
 import { useEffect, useState } from 'react';
 import Image from "next/image";
@@ -26,21 +26,64 @@ function useScreenWidthMotionValue() {
 const projects = [
   {
     title: 'Alkhana Real Estate',
-    description: 'A sleek and modern portfolio website built with React and TypeScript.',
-    imageUrl: '/images/portfolio.png',
+    description: 'Full stack property listing site with full-text search and booking features',
+    imageUrl: 'https://res.cloudinary.com/dfrpkzq8p/image/upload/f_webp/v1754223230/alkhana-realestate_ogz6qe.png',
     demoUrl: 'https://www.alkhanarealestate.com/',
     codeUrl: '',
+    techStack: ['Next.js', 'Tailwind CSS', 'MongoDB', 'Cloudinary', 'Node.js'],
+    status: 'Live',
+    type: 'Commercial Website',
   },
   {
-    title: 'Todo App',
-    description: 'A simple todo app with local storage and filtering options.',
-    imageUrl: '/images/todo.png',
-    demoUrl: 'https://todoapp.com',
-    codeUrl: 'https://github.com/yourusername/todo-app',
+    title: 'Interactive Lab Classroom Platform',
+    description: 'Desktop app for real-time student monitoring, chat, quizzes and classroom control in computer labs.',
+    imageUrl: 'https://res.cloudinary.com/dfrpkzq8p/image/upload/f_webp/v1754245511/interactive-lab_yci53x.png',
+    demoUrl: '',
+    codeUrl: '',
+    techStack: ['Electron.js', 'React', 'Spring Boot', 'gRPC', 'Mediasoup', 'MongoDB'],
+    status: 'In Progress',
+    type: 'Desktop Application',
+  },
+  {
+    title: 'YearBook App',
+    description: 'Digital year book app for graduating students to share photos, memories, and farewell messages.',
+    imageUrl: 'https://res.cloudinary.com/dfrpkzq8p/image/upload/v1754226125/yearbook_y3mrnb.png',
+    demoUrl: '',
+    codeUrl: '',
+    techStack: ['React Native', 'Firebase', 'Expo'],
+    status: 'Completed',
+    type: 'Mobile App',
+  },
+  {
+    title: 'Keno App (inspired by Kiron Interactive)',
+    description: 'Virtual betting desktop app simulating the Keno lottery style number draw game',
+    imageUrl: 'https://res.cloudinary.com/dfrpkzq8p/image/upload/f_webp/v1754246216/keno_irfbne.png',
+    demoUrl: '',
+    codeUrl: '',
+    techStack: ['Electron.js', 'React', 'Node.js'],
+    status: 'Completed',
+    type: 'Desktop Game',
+  },
+  {
+    title: 'Bingo App',
+    description: 'Classic Bingo game application with multiplier game interface',
+    imageUrl: 'https://res.cloudinary.com/dfrpkzq8p/image/upload/v1754226520/bingo_rxhm1k.png',
+    demoUrl: '',
+    codeUrl: '',
+    techStack: ['Electron.js', 'React', 'Node.js'],
+    status: 'Completed',
+    type: 'Desktop Game',
   },
 ];
 
 export default function Home() {
+  const itemVariants = {
+    hidden: { opacity: 0, x: -50 },
+    visible: (index: number) =>
+      ({ opacity: 1, x: 0, transition: { duration: 0.8, type: spring, dumping: 20, stiffness: 40, delay: (index + 1) * 0.3 } }),
+    exit: { opacity: 0, y: 30, transition: { duration: 0.4 } }
+  };
+
   const { scrollY, scrollYProgress } = useScroll();
   const [_, setScrolled] = useState(false);
   const [snapActive, setSnapActive] = useState(false);
@@ -147,9 +190,10 @@ export default function Home() {
               className="max-w-3xl mx-auto bg-white rounded-xl shadow-md p-6">
               <h2 className="text-2xl font-semibold text-gray-700 mb-4">About Me</h2>
               <p className="text-gray-600 text-md">
-                I&apos;m a recent Computer Science graduate from the University of Gondar with a strong interest in software engineering and modern web technologies.
-                I enjoy solving real-world problems using clean, efficient code and have experience building responsive web applications using tools like
-                React, Next.js, and Tailwind CSS. I&apos;m passionate about continuous learning, open-source collaboration, and writing maintainable, scalable software.
+                I&apos;m a Full Stack Developer with a strong foundation in building interactive scalable web and desktop applications.
+                With hands-on experience in modern technologies like React, Next.js, Node.js, Echo, Tauri, Flutter, Spring Boot.....
+                I&apos;ve built projects ranging from educational platforms and networks monitoring tools to real estate and e-commerce systems.
+                I Love solving problems through code and continuously strive to learn new technologies to deliver impactful digital solutions.
               </p>
             </motion.section>
 
@@ -162,7 +206,17 @@ export default function Home() {
               <h2 className="text-2xl font-semibold text-gray-700 mb-6">Projects</h2>
               <div className="flex flex-col gap-6">
                 {projects.map((proj, idx) => (
-                  <Project key={idx} {...proj} />
+                  <motion.div
+                    key={idx}
+                    custom={idx + 1}
+                    variants={itemVariants}
+                    whileInView="visible"
+                    initial="hidden"
+                    viewport={{ once: true, amount: 0.3 }}
+                    style={{ willChange: 'transform, opacity' }}
+                  >
+                    <Project key={idx} {...proj} />
+                  </motion.div>
                 ))}
               </div>
             </motion.section>
