@@ -36,7 +36,7 @@ export default function Home() {
   const scale = useTransform(scrollYProgress, [0, 0.05], [1, 0.2]);
   const hopacity = useTransform(scrollYProgress, [0, 0.05], [1, 0]); // From center to right
 
-  const mopacity = useTransform(scrollYProgress, [0, 0.4], [0, 1]);
+  const mopacity = useTransform(scrollYProgress, [0, 0.05], [0, 1]);
   const mtop = useTransform(scrollYProgress, [0, 0.05], ['0', '50%']);
 
 
@@ -46,14 +46,14 @@ export default function Home() {
     [scrollYProgress, responsiveHeight],
     ([scroll, rh]) => {
       const max = parseFloat(rh as string);
-      return `${max - (max - 70) * Math.min(scroll as number / 0.3, 1)}px`;
+      return `${max - (max - 70) * Math.min(scroll as number / 0.05, 1)}px`;
     }
   );
   const [startLeft, setStartLeft] = useState(screenWidth.get() > 851 ? '20%' : '50%');
   const [startY, setStartY] = useState(screenWidth.get() > 851 ? '0px' : '100px');
   const [startX, setStartX] = useState(screenWidth.get() > 851 ? '82px' : '10px');
   const [startPadding, setStartPadding] = useState(height.get());
-  const [endPadding, setEndPadding] = useState(`${parseFloat(height.get().split('p')[0]) + 280}px`);
+  const [endPadding, setEndPadding] = useState(`${parseFloat(height.get().split('p')[0]) + 30}px`);
 
   useMotionValueEvent(screenWidth, 'change', (val) => {
     setStartLeft(val > 851 ? '20%' : '50%');
