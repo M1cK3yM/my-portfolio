@@ -4,6 +4,7 @@ import { useScroll, useMotionValueEvent, LayoutGroup, useTransform, useMotionVal
 import * as motion from 'motion/react-client';
 import { useEffect, useState } from 'react';
 import Image from "next/image";
+import Project from './components/Project';
 
 function useScreenWidthMotionValue() {
   const screenWidth = useMotionValue(typeof window !== 'undefined' ? window.innerWidth : 0);
@@ -21,6 +22,23 @@ function useScreenWidthMotionValue() {
 
   return screenWidth;
 }
+
+const projects = [
+  {
+    title: 'Alkhana Real Estate',
+    description: 'A sleek and modern portfolio website built with React and TypeScript.',
+    imageUrl: '/images/portfolio.png',
+    demoUrl: 'https://www.alkhanarealestate.com/',
+    codeUrl: '',
+  },
+  {
+    title: 'Todo App',
+    description: 'A simple todo app with local storage and filtering options.',
+    imageUrl: '/images/todo.png',
+    demoUrl: 'https://todoapp.com',
+    codeUrl: 'https://github.com/yourusername/todo-app',
+  },
+];
 
 export default function Home() {
   const { scrollY, scrollYProgress } = useScroll();
@@ -139,16 +157,15 @@ export default function Home() {
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.6 }}
-              className="max-w-3xl mx-auto mt-10 bg-white rounded-xl shadow-md p-6">
-              <h2 className="text-2xl font-semibold text-gray-700 mb-4">Projects</h2>
-              <ul className="list-disc pl-6 space-y-2 text-gray-600">
-                <li>Portfolio</li>
-                <li>Alkhana Real Estate</li>
-                <li>Interactive Lab ClassRoom</li>
-              </ul>
+              className="max-w-3xl mx-auto mt-10 bg-white rounded-xl shadow-md p-6"
+            >
+              <h2 className="text-2xl font-semibold text-gray-700 mb-6">Projects</h2>
+              <div className="flex flex-col gap-6">
+                {projects.map((proj, idx) => (
+                  <Project key={idx} {...proj} />
+                ))}
+              </div>
             </motion.section>
-
-            <div className="h-[150vh]"></div>
 
             <footer className="text-center mt-12 text-sm text-gray-500 mb-20">
               <p>Crafted with love <span className="hidden">& GPT </span> | &copy; 2025 Michael Yirdaw</p>
