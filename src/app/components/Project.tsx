@@ -42,20 +42,23 @@ export default function Project({
         </div>
 
         <div className="mt-4 flex justify-between items-center text-sm">
-          <span className="text-gray-600">Status: <strong>{status}</strong></span>
-          <span className="text-gray-600">Type: <strong>{type}</strong></span>
+          <span className="text-gray-600"><strong>{status}</strong></span>
+          <span className="text-gray-600"><strong>{type}</strong></span>
         </div>
 
         <div className="flex gap-4 mt-4">
-          <a
-            href={codeUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1 text-indigo-600 hover:underline text-sm"
-          >
-            <FaGithub className="inline-block" />
-            Source
-          </a>
+          {codeUrl ? (
+            <a
+              href={codeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1 text-indigo-600 hover:underline text-sm"
+            >
+              <>
+                <FaGithub className="inline-block" />
+                Source
+              </>
+            </a>) : (<>Private</>)}
           {demoUrl && (
             <a
               href={demoUrl}
